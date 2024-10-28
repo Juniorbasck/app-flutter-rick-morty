@@ -11,13 +11,10 @@ class CharacterServiceImpl implements CharacterService {
   final Dio _client;
  
   @override
-  Future<void> getCharacter([int page = 1]) async {
-    final response = await _client.get(
+  Future<void> getCharacter([int page = 1]) async{
+    final response =_client.get(
       'character', 
       queryParameters: {'page': page},
     );  
-
-    print('Response: ${response.data}');
-    print('Status: ${response.statusCode}');
   }
 }

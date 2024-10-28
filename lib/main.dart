@@ -2,6 +2,7 @@ import 'package:app_flutter/characters/data/services/character_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,9 +37,9 @@ class MyHomePage extends StatelessWidget {
           final CharacterService service = CharacterServiceImpl(
             Dio(
               BaseOptions(
-                baseUrl: 'https://rickandmortyapi.com/api',
+                baseUrl: 'https://rickandmortyapi.com/api/',
               ),
-            )
+            )..interceptors.add(PrettyDioLogger()),
           );
           service.getCharacter(); 
         },
