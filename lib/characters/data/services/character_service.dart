@@ -1,4 +1,4 @@
-import 'package:http/http.dart';
+import 'package:dio/dio.dart';
 
 abstract class CharacterService {
   Future<void> getCharacter([int page = 1]);
@@ -8,18 +8,16 @@ class CharacterServiceImpl implements CharacterService {
   
   const CharacterServiceImpl(this._client);
 
-  final Client _client;
+  final Dio _client;
  
   @override
   Future<void> getCharacter([int page = 1]) async {
-    final Response response = await _client.get(Uri.https(
-      'rickandmortyapi.com',
-      '/api/character', 
-      {'page': '$page'},
-      ),
-    );
+    final response = await _client.get(
+      'character', 
+      queryParameters: {'page': page},
+    );  
 
-    print('Response: ${response.body}');
+    print('Response: ${response.data}');
     print('Status: ${response.statusCode}');
   }
 }

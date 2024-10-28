@@ -1,4 +1,5 @@
 import 'package:app_flutter/characters/data/services/character_service.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,8 +33,14 @@ class MyHomePage extends StatelessWidget {
     return Center(
       child: TextButton(
         onPressed: () {
-          final CharacterService service = CharacterServiceImpl(http.Client());
-          service.getCharacter();
+          final CharacterService service = CharacterServiceImpl(
+            Dio(
+              BaseOptions(
+                baseUrl: 'https://rickandmortyapi.com/api',
+              ),
+            )
+          );
+          service.getCharacter(); 
         },
         child: const Text('click here'),
       ),
