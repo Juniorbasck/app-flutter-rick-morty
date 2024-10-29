@@ -16,6 +16,7 @@ abstract class NetworkModule {
     @Named('BaseUrl') String baseUrl,
     @Named('PrettyDioLogger') Interceptor prettyDioLogger,
     
+    
     ) => 
       Dio(
         BaseOptions(baseUrl: baseUrl),
