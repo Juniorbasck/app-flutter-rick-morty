@@ -8,8 +8,13 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:app_flutter/characters/data/character_repository.dart' as _i269;
 import 'package:app_flutter/characters/data/services/character_service.dart'
     as _i903;
+import 'package:app_flutter/characters/domain/character_interator.dart'
+    as _i812;
+import 'package:app_flutter/characters/presentation/bloc/character_bloc.dart'
+    as _i684;
 import 'package:app_flutter/network/network_module.dart' as _i215;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
@@ -41,6 +46,12 @@ _i174.GetIt init(
       ));
   gh.factory<_i903.CharacterService>(
       () => _i903.CharacterServiceImpl(gh<_i361.Dio>()));
+  gh.factory<_i269.CharacterRepository>(
+      () => _i269.CharacterRepositoryImpl(gh<_i903.CharacterService>()));
+  gh.factory<_i812.CharacterInterator>(
+      () => _i812.CharacterInteratorImpl(gh<_i269.CharacterRepository>()));
+  gh.factory<_i684.CharacterBloc>(
+      () => _i684.CharacterBloc(gh<_i812.CharacterInterator>()));
   return getIt;
 }
 

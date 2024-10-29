@@ -1,5 +1,5 @@
-import 'package:app_flutter/Home/presentation/page/home_page.dart';
 import 'package:app_flutter/characters/presentation/bloc/character_bloc.dart';
+import 'package:app_flutter/shared/widgets/default_try_again_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,12 +44,46 @@ class _CharacterWidgetState extends State<CharacterWidget> {
                 ),
               )
             }else if (state.result == ResulState.error && state.isFirstPage) ... {
-              
+              Center(
+                child: DefaultTryAgainWidget(onPressed: _requesCharacter,) ,
+              )
+            }else ...{
+                ListView.builder(
+                  shrinkWrap: true,
+                  controller: _scrollController,
+                  itemBuilder: (context, index){
+                    if(index < state.characters.length){
+                      return SizedBox(
+                        height: 200,
+                        child: Text(state.characters[index].name),
+                    );
+                  }else if(state.result == ResulState.error){
+                    return DefaultTryAgainWidget(
+                      onPressed: _requesCharacter
+                    );
+                  }else {
+                    return const SizedBox(
+                      height: 100,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                },
+
+                itemCount: state.hashReachedMax
+                 ? state.characters.length 
+                 : state.characters.length + 1,
+              )
             }
           ],
         );
       },
     );
+  }
+
+  void _requesCharacter() {
+    context.read<CharacterBloc>().add(CharacterResquestEvent());
   }
 
   void _onScrollListener() {
@@ -58,8 +92,8 @@ class _CharacterWidgetState extends State<CharacterWidget> {
       && context.read<CharacterBloc>().
       state.result != 
       ResulState.error) {
-
-      context.read<CharacterBloc>().add(CharacterResquestEvent());
+      
+      _requesCharacter();
     }
   }
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 
 class DefaultTryAgainWidget extends StatelessWidget {
   const DefaultTryAgainWidget({super.key, required this.onPressed});
@@ -18,5 +17,4 @@ class DefaultTryAgainWidget extends StatelessWidget {
       ],
     ),
   );
-
 }

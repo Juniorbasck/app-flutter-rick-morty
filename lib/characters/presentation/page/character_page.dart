@@ -10,7 +10,8 @@ class CharacterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => GetIt.I.get<CharacterBloc>()..add(CharacterResquestEvent()),
+      create: (_) => GetIt.I.get<CharacterBloc>()
+      ..add(CharacterResquestEvent()),
       child: const CharacterWidget(),
     );
   }
