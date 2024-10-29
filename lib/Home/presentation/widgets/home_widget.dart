@@ -1,3 +1,4 @@
+import 'package:app_flutter/Home/presentation/cubit/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +21,21 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-  }   
+    return BlocBuilder<NavigationCubit, int>(
+      builder: (context, state) {
+        return Scaffold(
+          body: IndexedStack(
+            index: state,
+            children: _pages.keys.toList(),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: _pages.values.toList(),
+            currentIndex: state,
+            // ignore: lines_longer_than_80_chars
+            onTap: (value) => context.read<NavigationCubit>().onSelectedTab(value),
+          ),
+        );
+      },
+    );
+  }
 }
