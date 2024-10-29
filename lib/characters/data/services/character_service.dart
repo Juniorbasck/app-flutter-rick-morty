@@ -1,8 +1,9 @@
+import 'package:app_flutter/characters/data/services/character_response.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class CharacterService {
-  Future<void> getCharacter([int page = 1]);
+  Future<CharacterApiResponse> getCharacter([int page = 1]);
 }
 
 @Injectable(as: CharacterService)
@@ -13,10 +14,16 @@ class CharacterServiceImpl implements CharacterService {
   final Dio _client;
  
   @override
-  Future<void> getCharacter([int page = 1]) async{
-    final response =_client.get(
+  Future<CharacterApiResponse> getCharacter([int page = 1]) async{
+    final response = await _client.get(
       'character', 
       queryParameters: {'page': page},
     );  
+
+    if (response.statusCode == 200) {
+      return CharacterApiResponse.fromJson(response.data);
+    } 
+
+    throw Exception('Failed to load character');
   }
 }
