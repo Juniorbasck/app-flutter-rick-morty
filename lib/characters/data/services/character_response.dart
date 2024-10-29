@@ -2,11 +2,6 @@ import 'package:equatable/equatable.dart';
 
 class CharacterInfoResponse extends Equatable{
 
-  final int? count;
-  final int? pages; 
-  final String? next;
-  final String? prev;
-
  factory CharacterInfoResponse.fromJson(Map<String, dynamic> json) =>
     CharacterInfoResponse(
       count: json['count'] as int?,
@@ -22,18 +17,16 @@ class CharacterInfoResponse extends Equatable{
     this.prev,
   });
 
+  final int? count;
+  final int? pages; 
+  final String? next;
+  final String? prev;
+
   @override
   List<Object?> get props => [count, pages, next, prev];
 }
 
 class CharacterResponse extends Equatable{
-
-  final int id;
-  final String name;
-  final String status;
-  final String species;
-  final String type;
-  final String image;
 
   factory CharacterResponse.fromJson(Map<String, dynamic> json) =>
     CharacterResponse(
@@ -53,15 +46,19 @@ class CharacterResponse extends Equatable{
     this.type,
     this.image
   );
+
+  final int id;
+  final String name;
+  final String status;
+  final String species;
+  final String type;
+  final String image;
   
   @override
   List<Object> get props => [id, name, status, species, type, image];
 }
 
 class CharacterApiResponse extends Equatable{
-  
-  final CharacterInfoResponse info;
-  final List<CharacterResponse> results;
 
   const CharacterApiResponse(this.info, this.results);
 
@@ -69,9 +66,12 @@ class CharacterApiResponse extends Equatable{
     CharacterApiResponse(
         CharacterInfoResponse.fromJson(json['info']),
         (json['results'] as List<dynamic>)
-        .map((CharacterJson) => CharacterResponse.fromJson(CharacterJson))
+        .map((characterJson) => CharacterResponse.fromJson(characterJson))
         .toList(),
     );
+  
+  final CharacterInfoResponse info;
+  final List<CharacterResponse> results;
 
   @override
   List<Object> get props => [info, results];

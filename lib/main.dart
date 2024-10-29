@@ -1,9 +1,7 @@
 import 'package:app_flutter/characters/data/services/character_service.dart';
 import 'package:app_flutter/injection.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,12 +31,16 @@ class MyHomePage extends StatelessWidget {
   
   const MyHomePage({super.key});
 
+  @override
   Widget build(BuildContext context){
     return Center(
       child: TextButton(
-        onPressed: () {
+        onPressed: () async {
           final CharacterService service = GetIt.I.get();
           service.getCharacter(); 
+
+
+          // print(response);
         },
         child: const Text('click here'),
       ),
