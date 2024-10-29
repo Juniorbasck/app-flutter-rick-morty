@@ -1,0 +1,19 @@
+import 'package:app_flutter/characters/data/services/character_response.dart';
+import 'package:app_flutter/characters/data/services/character_service.dart';
+import 'package:injectable/injectable.dart';
+
+abstract class CharacterRepository {
+  Future<CharacterApiResponse> getCharacters(int page);
+}
+
+@Injectable(as: CharacterRepository)
+class CharacterRepositoryImpl implements CharacterRepository {
+
+  const CharacterRepositoryImpl(this._service);
+
+  final CharacterService _service;
+
+  @override
+  Future<CharacterApiResponse> getCharacters(int page) => 
+  _service.getCharacter(page);
+} 
