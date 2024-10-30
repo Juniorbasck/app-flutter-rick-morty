@@ -1,3 +1,4 @@
+import 'package:app_flutter/shared/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 
 class SettingWidget extends StatelessWidget {
@@ -26,9 +27,16 @@ class SettingWidget extends StatelessWidget {
               color: Colors.lightBlueAccent
               ), 
               trailing: const Icon(Icons.chevron_right),
-              onTap: () => 'Flutter dev'
+              onTap: () => 'Flutter.dev'.launchInBrowser(),
             ),
-            
+            ListTile(
+              title: const Text('Androd developers blohg'),
+              leading: const Icon(Icons.android, 
+              color: Colors.greenAccent
+              ), 
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => 'android-developers.googleblog.com'.launchInBrowser(),
+            ),
           ],
         )
       ],
