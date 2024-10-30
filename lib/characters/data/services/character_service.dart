@@ -20,10 +20,12 @@ class CharacterServiceImpl implements CharacterService {
       queryParameters: {'page': page},
     );  
 
+    // await Future.delayed(const Duration(seconds: 2));
+
     if (response.statusCode == 200) {
       return CharacterApiResponse.fromJson(response.data);
     } 
 
-    throw Exception('Failed to load character');
+    throw Exception('Failed to load character at page $page');
   }
 }

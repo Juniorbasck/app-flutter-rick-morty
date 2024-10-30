@@ -1,4 +1,6 @@
 import 'package:app_flutter/characters/presentation/bloc/character_bloc.dart';
+import 'package:app_flutter/characters/presentation/widgets/character_card_widget.dart';
+import 'package:app_flutter/shared/widgets/default_loading_widget.dart';
 import 'package:app_flutter/shared/widgets/default_try_again_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +13,6 @@ class CharacterWidget extends StatefulWidget {
 }
 
 class _CharacterWidgetState extends State<CharacterWidget> {
-  
   final _scrollController = ScrollController();
 
   @override
@@ -23,8 +24,8 @@ class _CharacterWidgetState extends State<CharacterWidget> {
   @override
   void dispose() {
     _scrollController
-    ..removeListener(_onScrollListener)
-    ..dispose();
+      ..removeListener(_onScrollListener)
+      ..dispose();
     super.dispose();
   }
 
@@ -35,45 +36,36 @@ class _CharacterWidgetState extends State<CharacterWidget> {
         return Stack(
           children: [
             if (state.result == ResulState.initial ||
-             state.result == ResulState.loading && 
-             state.isFirstPage) ... {
+                state.result == ResulState.loading && state.isFirstPage) ...{
               const Center(
-                child: SizedBox(
-                  height: 100,
-                  child: CircularProgressIndicator(),
+                child: DefaultLoadingWidget(),
+              )
+            } else if (state.result == ResulState.error &&
+                state.isFirstPage) ...{
+              Center(
+                child: DefaultTryAgainWidget(
+                  onPressed: _requesCharacter,
                 ),
               )
-            }else if (state.result == ResulState.error && state.isFirstPage) ... {
-              Center(
-                child: DefaultTryAgainWidget(onPressed: _requesCharacter,) ,
-              )
-            }else ...{
-                ListView.builder(
-                  shrinkWrap: true,
-                  controller: _scrollController,
-                  itemBuilder: (context, index){
-                    if(index < state.characters.length){
-                      return SizedBox(
-                        height: 200,
-                        child: Text(state.characters[index].name),
+            } else ...{
+              ListView.builder(
+                shrinkWrap: true,
+                controller: _scrollController,
+                itemBuilder: (context, index) {
+                  if (index < state.characters.length) {
+                    return CharacterCardWidget(
+                      response: state.characters[index],
+                      onTap: () {},
                     );
-                  }else if(state.result == ResulState.error){
-                    return DefaultTryAgainWidget(
-                      onPressed: _requesCharacter
-                    );
-                  }else {
-                    return const SizedBox(
-                      height: 100,
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
+                  } else if (state.result == ResulState.error) {
+                    return DefaultTryAgainWidget(onPressed: _requesCharacter);
+                  } else {
+                    return const DefaultLoadingWidget();
                   }
                 },
-
                 itemCount: state.hashReachedMax
-                 ? state.characters.length 
-                 : state.characters.length + 1,
+                    ? state.characters.length
+                    : state.characters.length + 1,
               )
             }
           ],
@@ -87,18 +79,13 @@ class _CharacterWidgetState extends State<CharacterWidget> {
   }
 
   void _onScrollListener() {
-  
-    if (_isBottomReached 
-      && context.read<CharacterBloc>().
-      state.result != 
-      ResulState.error) {
-      
+    if (_isBottomReached &&
+        context.read<CharacterBloc>().state.result != ResulState.error) {
       _requesCharacter();
     }
   }
 
-  bool get _isBottomReached{
-  
+  bool get _isBottomReached {
     if (!_scrollController.hasClients) return false;
 
     final maxScroll = _scrollController.position.maxScrollExtent;
