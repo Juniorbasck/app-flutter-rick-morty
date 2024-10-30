@@ -1,5 +1,6 @@
 import 'package:app_flutter/Home/presentation/cubit/navigation_cubit.dart';
 import 'package:app_flutter/characters/presentation/page/character_page.dart';
+import 'package:app_flutter/setting/page/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,10 +11,10 @@ class HomeWidget extends StatelessWidget {
       const CharacterPage()
       : const BottomNavigationBarItem(
         icon: Icon(Icons.person), 
-        label: ('Characters'),),
-        const Center(
-          child: Text('Settings Page'),
-          ): const BottomNavigationBarItem(
+        label: ('Characters'),
+        ),
+        const SettingPage()
+        : const BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: ('Settings')
           )

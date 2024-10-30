@@ -9,7 +9,7 @@ class CicleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     late Color color;
 
-    if (status == 'deade'){
+    if (status == 'dead'){
       color = Colors.red;
     }else if (status == 'alive'){
       color = Colors.green;
