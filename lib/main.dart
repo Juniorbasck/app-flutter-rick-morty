@@ -1,5 +1,7 @@
 import 'package:app_flutter/Home/presentation/page/home_page.dart';
 import 'package:app_flutter/injection.dart';
+import 'package:app_flutter/shared/theme/aplication_theme.dart';
+import 'package:app_flutter/shared/theme/data/app_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -16,11 +18,7 @@ class RickAndMortyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AplicationTheme.themes[AppTheme.dark]?.themeData,
       home: const HomePage(),
     );
   }
